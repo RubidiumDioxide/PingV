@@ -1,0 +1,84 @@
+
+// Custom calendar grid styling (Material doesn't have a built-in calendar view)
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(160px, 1fr));
+  gap: 0.5rem;
+  overflow-x: auto;
+}
+
+.calendar-cell {
+  min-height: 120px;
+  padding: 0.75rem;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 0.75rem;
+  background: var(--mat-sys-surface-container-lowest);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--mat-sys-surface-container-low);
+  }
+}
+
+.calendar-header {
+  min-height: auto;
+  padding: 0.5rem;
+  background: transparent;
+  border-color: transparent;
+  font-weight: 700;
+  text-align: center;
+  cursor: default;
+
+  &:hover {
+    background: transparent;
+  }
+}
+
+.calendar-date {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.other-month {
+  opacity: 0.55;
+}
+
+.calendar-slot {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+}
+
+.slot-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.slot-delete {
+  color: var(--mat-sys-error);
+}
+
+.slot-time {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.slot-note {
+  margin-top: 0.2rem;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+@media (max-width: 700px) {
+  .calendar-grid {
+    grid-template-columns: repeat(7, minmax(120px, 1fr));
+  }
+}
+
+

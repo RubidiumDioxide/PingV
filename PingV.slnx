@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="PingV.API/PingV.API.csproj" />
+  <Project Path="PingV.Application/PingV.Application.csproj" />
+  <Project Path="PingV.Domain/PingV.Domain.csproj" />
+  <Project Path="PingV.Infrastructure.PostgreSQL/PingV.Infrastructure.PostgreSQL.csproj" Id="6292e44e-e3c6-4c3d-b680-31136620826f" />
+  <Project Path="PingV.Infrastructure.SQLServer/PingV.Infrastructure.SQLServer.csproj" Id="65add9d2-7349-49aa-aec2-e25745763244" />
+  <Project Path="PingV.Infrastructure/PingV.Infrastructure.csproj" />
+</Solution>

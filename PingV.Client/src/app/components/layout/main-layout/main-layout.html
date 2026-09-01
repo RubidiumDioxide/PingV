@@ -1,0 +1,20 @@
+<app-header />
+
+<main class="content-container">
+  @if(isLoading()) {
+    <div class="loading-spinner-container">
+      <mat-spinner/> 
+      <p>Loading...</p>
+    </div>
+  } 
+  @else {
+    @if(cascadingService.selectedUser() == null){
+      <app-user-select />
+    } 
+    @else {
+      <router-outlet /> 
+    }
+  } 
+</main>
+
+<app-footer />

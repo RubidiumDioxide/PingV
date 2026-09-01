@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>Create Availability Slot</h2>
+<p mat-dialog-content *ngIf="data.selectedDate" style="margin-bottom: 1.5rem; color: var(--mat-sys-on-surface-variant); font-size: 0.875rem;">
+  {{ data.selectedDate.toDateString() }}
+</p>
+
+<mat-dialog-content>
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Start</mat-label>
+      <input matInput type="datetime-local" [value]="start()" (input)="setStart($event)" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>End</mat-label>
+      <input matInput type="datetime-local" [value]="end()" (input)="setEnd($event)" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Note</mat-label>
+      <input matInput type="text" [value]="note()" (input)="setNote($event)" placeholder="Optional note" />
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="onSubmit()">Create Slot</button>
+</mat-dialog-actions>
+

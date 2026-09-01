@@ -1,0 +1,68 @@
+<main>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Get Monthly Schedule</mat-card-title>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="input-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Year</mat-label>
+            <input matInput type="number" [value]="year()" (change)="setYear($event)" min="2000" max="2100" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Month</mat-label>
+            <mat-select [value]="month()" (selectionChange)="setMonth($event.value)">
+              <mat-option *ngFor="let monthName of monthNames; let i = index" [value]="i + 1">
+                {{ monthName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    @if(isLoading()) {
+      <div class="loading-spinner-container">
+        <mat-spinner/> 
+        <p>Loading availability slots...</p>
+      </div>
+    } 
+    @else { 
+      <mat-card>
+        <mat-card-header class="calendar-header">
+          <mat-card-title>{{ displayMonthLabel() }}</mat-card-title>
+          
+          <div class="calendar-prev-next-buttons">
+            <button matIconButton aria-label="Previous month" (click)="changeMonth(-1)">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <button matIconButton aria-label="Next month" (click)="changeMonth(1)">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="calendar-grid">
+            <div class="calendar-cell calendar-header" *ngFor="let weekday of weekdays">{{ weekday }}</div>
+            <div class="calendar-cell" *ngFor="let cell of calendarDays()" [class.other-month]="!cell.isCurrentMonth" (click)="openCreateModal(cell.date)">
+              <div class="calendar-date">{{ cell.date.getDate() }}</div>
+              <div class="calendar-slot" *ngFor="let slot of cell.slots" (click)="$event.stopPropagation()">
+                <div class="slot-content">
+                  <div>
+                    <div class="slot-time">{{ slot.start | date:'HH:mm' }} – {{ slot.end | date:'HH:mm' }}</div>
+                    <div class="slot-note">{{ slot.note || 'No note' }}</div>
+                  </div>
+                  <button matIconButton class="slot-delete" aria-label="Delete slot" (click)="deleteSlot(slot.id); $event.stopPropagation()">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+</main>

@@ -1,0 +1,17 @@
+<div class="user-select-container">
+    <h1>Choose your fighter </h1> 
+
+    <div class="user-select-radiogroup" role="radiogroup">
+        @for (user of cascadingService.users(); track user.id) {
+            <button 
+                type="button" 
+                class="user-card"
+                [class.selected]="cascadingService.selectedUser()?.id === user.id"
+                (click)="cascadingService.selectUser(user.id)"
+                role="radio">
+                <mat-icon [style.color]="getUserColor(user.id)">account_circle</mat-icon>
+                <span class="user-login">{{ user.login }}</span>
+            </button> 
+        }
+    </div>
+</div>  

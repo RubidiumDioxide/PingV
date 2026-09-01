@@ -1,0 +1,85 @@
+mat-card {
+  margin-bottom: 1rem; 
+}
+
+mat-card-content .input-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;  
+}
+
+.loading-spinner-container {
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  margin-top: 20vh; 
+  padding: 16px; 
+  width: 100%; 
+}
+
+.calendar-header{
+   display: flex; 
+   justify-content: space-between; 
+   align-items: center; 
+   gap: 1rem; 
+   margin-bottom: 1rem;
+}
+
+.calendar-prev-next-buttons {
+  display: flex; 
+  gap: 0.5rem; 
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(160px, 1fr));
+  gap: 0.5rem;
+  overflow-x: auto;
+}
+
+.calendar-cell {
+  min-height: 120px;
+  padding: 0.75rem;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 0.75rem;
+  background: var(--mat-sys-surface-container-lowest); 
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+
+  &:hover { background: var(--mat-sys-surface-container-low); }
+}
+
+.calendar-header {
+  min-height: auto;
+  padding: 0.5rem;
+  background: transparent;
+  border-color: transparent;
+  font-weight: 700;
+  text-align: center;
+  cursor: default;
+
+  &:hover { background: transparent; }
+}
+
+.calendar-date { font-weight: 700; margin-bottom: 0.5rem; }
+
+.other-month { opacity: 0.55; }
+
+.calendar-slot {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+}
+
+.slot-content { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; }
+
+.slot-delete { color: var(--mat-sys-error); }
+
+.slot-time { font-size: 0.8rem; font-weight: 700; }
+
+.slot-note { margin-top: 0.2rem; font-size: 0.75rem; opacity: 0.8; } 
