@@ -10,7 +10,7 @@ export const routes: Routes = [
     children: [
       { path: '', component: AvailabilityPage },
       // add more pages  
-    ]
+    ] 
   },
   { path: '**', redirectTo: '' } 
   // routes outside the layout (e.g., 404 page)  

@@ -60,7 +60,7 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true 
             }
           },
           "defaultConfiguration": "production"
@@ -72,13 +72,7 @@
               "buildTarget": "PingV.Client:build:development"
             }
           }, 
-          "defaultConfiguration": "development", 
-          "options": {
-            "ssl": true,
-            "sslCert": "ssl/localhost.pem",
-            "sslKey": "ssl/localhost-key.pem", 
-            "open": true 
-          }
+          "defaultConfiguration": "development" 
         },
         "test": {
           "builder": "@angular/build:unit-test"

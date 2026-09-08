@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class UserRequestService {
   private httpClient = inject(HttpClient);
-  private readonly apiBase = 'https://localhost:7170/api/user';
+  private readonly apiBase = '/api/user';
 
   get(): Observable<UserDto[]> {
     return this.httpClient.get<UserDto[]>(

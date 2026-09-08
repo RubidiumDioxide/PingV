@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, computed, inject, signal, PLATFORM_ID } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
@@ -39,6 +39,7 @@ import { SnackbarService } from '../../../service/snackbar.service';
   styleUrl: './availability-page.scss'
 })
 export class AvailabilityPage implements OnInit { 
+  private readonly platformId = inject(PLATFORM_ID);
   readonly cascadingService = inject(CascadingService); 
   readonly snackbarService = inject(SnackbarService); 
   private readonly dialog = inject(MatDialog);
@@ -58,7 +59,9 @@ export class AvailabilityPage implements OnInit {
 
   // loading & operations 
   ngOnInit(): void {
-    this.getMonthlySchedule(2026, 8);
+    if(isPlatformBrowser(this.platformId)){
+      this.getMonthlySchedule(2026, 8);
+    }
   }
 
   getMonthlySchedule(year: number = this.year(), month: number = this.month()): void {

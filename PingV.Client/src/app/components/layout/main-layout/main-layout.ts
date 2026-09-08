@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from '../header/header';
 import { Footer } from '../footer/footer';
@@ -9,6 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { UserSelect } from '../../misc/user-select/user-select';
 import { SnackbarService } from '../../../service/snackbar.service';
+import { isPlatformBrowser } from '@angular/common';
 
 
 @Component({
@@ -26,6 +27,7 @@ import { SnackbarService } from '../../../service/snackbar.service';
     styleUrl: './main-layout.scss',
 })
 export class MainLayout implements OnInit {
+    private readonly platformId = inject(PLATFORM_ID);
     readonly cascadingService = inject(CascadingService); 
     readonly snackbarService = inject(SnackbarService); 
 
@@ -36,7 +38,9 @@ export class MainLayout implements OnInit {
 
     // loading && operations 
     ngOnInit(): void {
-        this.getUsers();
+        if(isPlatformBrowser(this.platformId)){
+            this.getUsers();
+        }
     }
 
     getUsers(): void {

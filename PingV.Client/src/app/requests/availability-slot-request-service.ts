@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class AvailabilitySlotRequestService { 
   private httpClient = inject(HttpClient);
-  private readonly apiBase = 'https://localhost:7170/api/availabilityslot';
+  private readonly apiBase = '/api/availabilityslot';
 
   getByMonth(userId: string, year: number, month: number): Observable<AvailabilitySlotDto[]> {
     return this.httpClient.get<AvailabilitySlotDto[]>(
