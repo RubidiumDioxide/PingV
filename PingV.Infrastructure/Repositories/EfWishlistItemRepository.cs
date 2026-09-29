@@ -10,30 +10,30 @@ using PingV.Application.Resources;
 
 namespace PingV.Infrastructure.Repositories;
 
-public sealed class EfAvailabilitySlotRepository(
+public sealed class EfWishlistItemRepository(
     PingVDbContext context, 
-    ILogger<EfAvailabilitySlotRepository> logger 
-) : IAvailabilitySlotRepository
+    ILogger<EfWishlistItemRepository> logger 
+) : IWishlistItemRepository
 {
     private readonly PingVDbContext _context = context;
-    private readonly ILogger<EfAvailabilitySlotRepository> _logger = logger; 
+    private readonly ILogger<EfWishlistItemRepository> _logger = logger; 
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="slot"></param>
+    /// <param name="item"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
     /// <exception cref="ServerSideException"></exception>
-    public async Task AddAsync(AvailabilitySlot slot, CancellationToken ct = default)
+    public async Task AddAsync(WishlistItem item, CancellationToken ct = default)
     {
         try
         {
             ct.ThrowIfCancellationRequested();
 
-            var newSlot = slot.DomainToEf();
+            var newItem = item.DomainToEf();
 
-            await _context.AvailabilitySlots.AddAsync(newSlot, ct);
+            await _context.WishlistItems.AddAsync(newItem, ct);
             await _context.SaveChangesAsync(ct);
         }
         catch (ServerSideException) { throw; }
@@ -48,25 +48,20 @@ public sealed class EfAvailabilitySlotRepository(
     /// 
     /// </summary>
     /// <param name="creatorId"></param>
-    /// <param name="year"></param>
-    /// <param name="month"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
     /// <exception cref="ServerSideException"></exception>
-    public async Task<IEnumerable<AvailabilitySlot>> GetByCreatorIdByMonthAsync(Guid creatorId, int year, int month, CancellationToken ct = default)
+    public async Task<IEnumerable<WishlistItem>> GetByCreatorIdAsync(Guid creatorId, CancellationToken ct = default)
     {
         try
         {
             ct.ThrowIfCancellationRequested();
 
-            var monthStart = new DateTimeOffset(year, month, 1, 0, 0, 0, TimeSpan.Zero);
-            var monthEnd = monthStart.AddMonths(1);
-
-            var slots = await _context.AvailabilitySlots
-                .Where(slot => slot.CreatorId == creatorId && slot.Start < monthEnd && slot.End > monthStart)
+            var items = await _context.WishlistItems
+                .Where(item => item.CreatorId == creatorId)
                 .ToListAsync(ct);
 
-            return slots.Select(slot => slot.EfToDomain());
+            return items.Select(item => item.EfToDomain());
         }
         catch (ServerSideException) { throw; }
         catch (Exception ex)
@@ -75,7 +70,7 @@ public sealed class EfAvailabilitySlotRepository(
             throw new ServerSideException(ServerSideErrorMessages.GetGenericError);
         }
     }
-
+    
     /// <summary>
     /// 
     /// </summary>
@@ -83,23 +78,23 @@ public sealed class EfAvailabilitySlotRepository(
     /// <param name="ct"></param>
     /// <returns></returns>
     /// <exception cref="ServerSideException"></exception>
-    public async Task<AvailabilitySlot> DeleteAsync(Guid id, CancellationToken ct = default)
+    public async Task<WishlistItem> DeleteAsync(Guid id, CancellationToken ct = default)
     {
         try
         {
             ct.ThrowIfCancellationRequested();
 
-            var slot = await _context.AvailabilitySlots.FindAsync([id], ct);
+            var item = await _context.WishlistItems.FindAsync([id], ct);
 
-            if (slot == null)
+            if (item == null)
             {
                 throw new ServerSideException(ServerSideErrorMessages.NotFound);
             }
 
-            _context.AvailabilitySlots.Remove(slot);
+            _context.WishlistItems.Remove(item);
             await _context.SaveChangesAsync(ct);
 
-            return slot.EfToDomain();
+            return item.EfToDomain();
         }
         catch (ServerSideException) { throw; }
         catch (Exception ex)

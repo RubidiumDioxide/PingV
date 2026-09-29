@@ -26,7 +26,7 @@ public sealed class EfUserRepository(
 
             var users = await _context.Users.ToListAsync(ct); 
 
-            return users.Select(u => u.UserEfToDomain());
+            return users.Select(user => user.EfToDomain());
         }
         catch (ServerSideException) { throw; }
         catch (Exception ex)
@@ -49,7 +49,7 @@ public sealed class EfUserRepository(
                 throw new ServerSideException(ServerSideErrorMessages.NotFound);
             }
 
-            return user.UserEfToDomain();
+            return user.EfToDomain();
         }
         catch (ServerSideException) { throw; }
         catch (Exception ex)
@@ -73,7 +73,7 @@ public sealed class EfUserRepository(
                 throw new ServerSideException(ServerSideErrorMessages.NotFound);
             }
 
-            return user.UserEfToDomain();
+            return user.EfToDomain();
         }
         catch (ServerSideException) { throw; }
         catch (Exception ex)

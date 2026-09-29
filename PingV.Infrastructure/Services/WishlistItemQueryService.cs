@@ -12,57 +12,52 @@ using static PingV.Infrastructure.Mappers.Mapper;
 
 namespace PingV.Infrastructure.Services; 
 
-public class AvailabilitySlotQueryService(
+public class WishlistItemQueryService(
     PingVDbContext context,
     IDistributedCache cache, 
     string dbProviderPrefix, 
-    ILogger<AvailabilitySlotQueryService> logger
-) : IAvailabilitySlotQueryService
+    ILogger<WishlistItemQueryService> logger
+) : IWishlistItemQueryService
 {
     private readonly PingVDbContext _context = context;
     private readonly IDistributedCache _cache = cache;
     private readonly string _dbProviderPrefix = dbProviderPrefix; 
-    private readonly ILogger<AvailabilitySlotQueryService> _logger = logger;
+    private readonly ILogger<WishlistItemQueryService> _logger = logger;
     private static readonly JsonSerializerOptions JsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="creatorId"></param>
-    /// <param name="year"></param>
-    /// <param name="month"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
     /// <exception cref="ServerSideException"></exception>
-    public async Task<IEnumerable<AvailabilitySlotDto>> GetByCreatorIdByMonthAsync(Guid creatorId, int year, int month, CancellationToken ct = default)
+    public async Task<IEnumerable<WishlistItemDto>> GetByCreatorId(Guid creatorId, CancellationToken ct = default)
     {
         try
         {
-            var availabilitySlots = Enumerable.Empty<AvailabilitySlotDto>();
+            var items = Enumerable.Empty<WishlistItemDto>();
 
-            var cacheKey = GetCacheKey(creatorId, year, month);
+            var cacheKey = GetCacheKey(creatorId);
             var cachedValue = await _cache.GetStringAsync(cacheKey, ct);
             if (cachedValue != null)
             {
-                availabilitySlots = JsonSerializer.Deserialize<IEnumerable<AvailabilitySlotDto>>(cachedValue, JsonOptions) ?? [];
+                items = JsonSerializer.Deserialize<IEnumerable<WishlistItemDto>>(cachedValue, JsonOptions) ?? [];
             }
-            else
+            else 
             {
-                var monthStart = new DateTimeOffset(year, month, 1, 0, 0, 0, TimeSpan.Zero);
-                var monthEnd = monthStart.AddMonths(1);
-
-                availabilitySlots = await _context.AvailabilitySlots
-                    .Where(slot => slot.CreatorId == creatorId && slot.Start < monthEnd && slot.End > monthStart)
-                    .Select(AvailabilitySlotEfToDto).ToListAsync(ct);                
+                items = await _context.WishlistItems
+                    .Where(item => item.CreatorId == creatorId)
+                    .Select(WishlistItemEfToDto).ToListAsync(ct);                
                 
-                var payload = JsonSerializer.Serialize(availabilitySlots, JsonOptions);
+                var payload = JsonSerializer.Serialize(items, JsonOptions);
                 await _cache.SetStringAsync(cacheKey, payload, new DistributedCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
                 }, ct);
             }
 
-            return availabilitySlots;
+            return items;
         }
         catch (ServerSideException) { throw; }
         catch (Exception ex)
@@ -74,5 +69,5 @@ public class AvailabilitySlotQueryService(
 
 
     // --- HELPERS --- 
-    private string GetCacheKey(Guid creatorId, int year, int month) => $"{_dbProviderPrefix}:availabilitySlotsByCreatorIdByMonth:{creatorId}:{year}:{month}";
+    private string GetCacheKey(Guid creatorId) => $"{_dbProviderPrefix}:wishlistItemsByCreatorId:{creatorId}";
 }

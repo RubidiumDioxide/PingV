@@ -1,12 +1,11 @@
 namespace PingV.Infrastructure.Data.Models;
 
-public class AvailabilitySlotEfModel
+public class WishlistItemEfModel
 {
     public Guid Id { get; set; }
     public Guid CreatorId { get; set; }
-    public DateTimeOffset Start { get; set; }
-    public DateTimeOffset End { get; set; }
-    public string? Note { get; set; }
+    public string Title { get; set; } = default!;
+    public string? Description { get; set; }
 
     public virtual UserEfModel Creator { get; set; } = default!; 
 }

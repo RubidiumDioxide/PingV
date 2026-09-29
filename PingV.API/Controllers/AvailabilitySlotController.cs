@@ -17,12 +17,12 @@ public sealed class AvailabilitySlotController(
     private readonly ILogger<AvailabilitySlotController> _logger = logger;
 
 
-    [HttpGet("{userId:guid}/{year:int}/{month:int}")]
-    public async Task<IActionResult> GetByMonth(Guid userId, int year, int month, CancellationToken ct)
+    [HttpGet("{creatorId:guid}/{year:int}/{month:int}")]
+    public async Task<IActionResult> GetByCreatorIdByMonth(Guid creatorId, int year, int month, CancellationToken ct)
     {
         try
         {
-            var slots = await _availabilitySlotQueryService.GetMonthlyScheduleAsync(userId, year, month, ct);
+            var slots = await _availabilitySlotQueryService.GetByCreatorIdByMonthAsync(creatorId, year, month, ct);
             
             return Ok(slots);
         }
@@ -38,7 +38,7 @@ public sealed class AvailabilitySlotController(
     {
         try
         {
-            await _availabilitySlotCommandService.AddAvailabilitySlotAsync(request, ct);
+            await _availabilitySlotCommandService.AddAsync(request, ct);
 
             return Ok();
         }
@@ -54,7 +54,7 @@ public sealed class AvailabilitySlotController(
     {
         try
         {
-            await _availabilitySlotCommandService.DeleteAvailabilitySlotAsync(id, ct);
+            await _availabilitySlotCommandService.DeleteAsync(id, ct);
             
             return Ok(); 
         }

@@ -65,6 +65,29 @@ namespace PingV.Infrastructure.SQLServer.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("PingV.Infrastructure.Data.Models.WishlistItemEfModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("WishlistItems");
+                });
+
             modelBuilder.Entity("PingV.Infrastructure.Data.Models.AvailabilitySlotEfModel", b =>
                 {
                     b.HasOne("PingV.Infrastructure.Data.Models.UserEfModel", "Creator")
@@ -76,9 +99,22 @@ namespace PingV.Infrastructure.SQLServer.Migrations
                     b.Navigation("Creator");
                 });
 
+            modelBuilder.Entity("PingV.Infrastructure.Data.Models.WishlistItemEfModel", b =>
+                {
+                    b.HasOne("PingV.Infrastructure.Data.Models.UserEfModel", "Creator")
+                        .WithMany("CreatedWishlistItems")
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+                });
+
             modelBuilder.Entity("PingV.Infrastructure.Data.Models.UserEfModel", b =>
                 {
                     b.Navigation("CreatedAvailibilitySlots");
+
+                    b.Navigation("CreatedWishlistItems");
                 });
 #pragma warning restore 612, 618
         }

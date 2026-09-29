@@ -6,6 +6,7 @@ namespace PingV.Infrastructure.Data;
 public sealed class PingVDbContext(DbContextOptions<PingVDbContext> options) : DbContext(options)
 {
     public DbSet<AvailabilitySlotEfModel> AvailabilitySlots { get; set; } = null!;
+    public DbSet<WishlistItemEfModel> WishlistItems { get; set; } = null!;
     public DbSet<UserEfModel> Users { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -21,7 +22,19 @@ public sealed class PingVDbContext(DbContextOptions<PingVDbContext> options) : D
             builder.HasOne(slot => slot.Creator)
                 .WithMany(user => user.CreatedAvailibilitySlots)
                 .HasForeignKey(slot => slot.CreatorId);
-        }); 
+        });
+
+        modelBuilder.Entity<WishlistItemEfModel>(builder =>
+        {
+            builder.HasKey(item => item.Id);
+            builder.Property(item => item.CreatorId).IsRequired();
+            builder.Property(item => item.Title).IsRequired();
+            builder.Property(item => item.Description); 
+
+            builder.HasOne(item => item.Creator)
+                .WithMany(user => user.CreatedWishlistItems)
+                .HasForeignKey(item => item.CreatorId);
+        });
 
         modelBuilder.Entity<UserEfModel>(builder =>
         {

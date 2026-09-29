@@ -39,6 +39,5 @@ __screenshots__/
 Thumbs.db
 
 # Cert files 
-/ssl/
 *.pem 
 *.pfx

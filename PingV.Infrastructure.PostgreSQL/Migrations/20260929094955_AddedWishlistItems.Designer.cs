@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PingV.Infrastructure.Data;
@@ -11,9 +12,11 @@ using PingV.Infrastructure.Data;
 namespace PingV.Infrastructure.PostgreSQL.Migrations
 {
     [DbContext(typeof(PingVDbContext))]
-    partial class PingVDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260929094955_AddedWishlistItems")]
+    partial class AddedWishlistItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

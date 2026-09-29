@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="docker-compose.yml" />
+  </Folder>
   <Project Path="PingV.API/PingV.API.csproj" />
   <Project Path="PingV.Application/PingV.Application.csproj" />
   <Project Path="PingV.Domain/PingV.Domain.csproj" />

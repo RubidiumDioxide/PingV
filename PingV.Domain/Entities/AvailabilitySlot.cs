@@ -11,7 +11,6 @@ public class AvailabilitySlot
 
     private AvailabilitySlot() { } 
 
-    // obsolete? 
     public AvailabilitySlot(
         Guid id,  
         Guid creatorId, 
@@ -21,18 +20,6 @@ public class AvailabilitySlot
     {
         Id = id; 
         CreatorId = creatorId; 
-        TimeRange = timeRange;
-        Note = note;
-    }
-
-    public AvailabilitySlot(
-        Guid creatorId,
-        TimeRange timeRange,
-        string? note = null
-    )
-    {
-        Id = Guid.NewGuid(); 
-        CreatorId = creatorId;
         TimeRange = timeRange;
         Note = note;
     }

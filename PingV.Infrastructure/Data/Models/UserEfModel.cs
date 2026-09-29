@@ -6,4 +6,5 @@ public class UserEfModel
     public string Login { get; set; } = default!;
 
     public virtual IEnumerable<AvailabilitySlotEfModel> CreatedAvailibilitySlots { get; set; } = default!; 
+    public virtual IEnumerable<WishlistItemEfModel> CreatedWishlistItems { get; set; } = default!; 
 }

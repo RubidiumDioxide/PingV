@@ -34,7 +34,7 @@ public sealed class AvailabilitySlotCommandService(
     /// <param name="ct"></param>
     /// <returns></returns>
     /// <exception cref="ServerSideException"></exception>
-    public async Task AddAvailabilitySlotAsync(CreateAvailabilitySlotRequest request, CancellationToken ct = default)
+    public async Task AddAsync(CreateAvailabilitySlotRequest request, CancellationToken ct = default)
     {
         try
         {
@@ -45,7 +45,7 @@ public sealed class AvailabilitySlotCommandService(
                 throw new ServerSideException(ServerSideErrorMessages.NotFound);
             }
 
-            var newSlot = new AvailabilitySlot(request.CreatorId, new TimeRange(request.Start, request.End), request.Note); 
+            var newSlot = new AvailabilitySlot(Guid.NewGuid(), request.CreatorId, new TimeRange(request.Start, request.End), request.Note); 
                 
             await _slotRepository.AddAsync(newSlot, ct);
             
@@ -74,7 +74,7 @@ public sealed class AvailabilitySlotCommandService(
     /// <param name="ct"></param>
     /// <returns></returns>
     /// <exception cref="ServerSideException"></exception>
-    public async Task DeleteAvailabilitySlotAsync(Guid id, CancellationToken ct = default)
+    public async Task DeleteAsync(Guid id, CancellationToken ct = default)
     {
         try
         {

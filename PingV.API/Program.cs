@@ -63,7 +63,8 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 
 // repositories 
-builder.Services.AddScoped<IAvailabilitySlotRepository, EfAvailabilitySlotRepository>(); 
+builder.Services.AddScoped<IAvailabilitySlotRepository, EfAvailabilitySlotRepository>();
+builder.Services.AddScoped<IWishlistItemRepository, EfWishlistItemRepository>(); 
 builder.Services.AddScoped<IUserRepository, EfUserRepository>();
 
 // services 
@@ -83,6 +84,23 @@ builder.Services.AddScoped<IAvailabilitySlotCommandService, AvailabilitySlotComm
     var logger = sp.GetRequiredService<ILogger<AvailabilitySlotCommandService>>();
 
     return new AvailabilitySlotCommandService(availabilitySlotRepository, userRepository, cache, dbProvider, logger);
+});
+builder.Services.AddScoped<IWishlistItemQueryService, WishlistItemQueryService>(sp =>
+{
+    var context = sp.GetRequiredService<PingVDbContext>();
+    var cache = sp.GetRequiredService<IDistributedCache>();
+    var logger = sp.GetRequiredService<ILogger<WishlistItemQueryService>>();
+
+    return new WishlistItemQueryService(context, cache, dbProvider, logger);
+});
+builder.Services.AddScoped<IWishlistItemCommandService, WishlistItemCommandService>(sp =>
+{
+    var wishlistItemRepository = sp.GetRequiredService<IWishlistItemRepository>();
+    var userRepository = sp.GetRequiredService<IUserRepository>();
+    var cache = sp.GetRequiredService<IDistributedCache>();
+    var logger = sp.GetRequiredService<ILogger<WishlistItemCommandService>>();
+
+    return new WishlistItemCommandService(wishlistItemRepository, userRepository, cache, dbProvider, logger);
 });
 builder.Services.AddScoped<IUserQueryService, UserQueryService>(sp =>
 {
