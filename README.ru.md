@@ -11,5 +11,6 @@
 
 1. Создайте сертификат (dotnet dev-certs https).
 2. Скопируйте сертификат в `~\.aspnet\https`.
-3. `docker compose up --build` или запустите из Visual Studio 
+3. Создайте локальный .env с необходимыми значениями. 
+4. `docker compose up --build` или запустите из Visual Studio.  
 5. Приложение должно быть доступно на https://localhost:8080 . 
