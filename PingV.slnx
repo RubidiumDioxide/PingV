@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/APIGateways/">
-    <Project Path="APIGateways/WepAPIGateway/WebAPIGateway.csproj" />
+    <Project Path="APIGateways/WebAPIGateway/WebAPIGateway.csproj" />
   </Folder>
   <Folder Name="/Services/">
     <Project Path="Services/Schedule/Schedule.csproj" />
