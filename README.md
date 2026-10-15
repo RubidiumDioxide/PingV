@@ -9,10 +9,7 @@
 
 To deploy via Docker on Windows:
 
-1. Generate `localhost.pem` and `localhost-key.pem`.
-2. Place both files in `C:\Users\YOUR_USERNAME\.angular\https`.
-3. If needed, update the path to the certificate folder in `docker-compose.yml`. 
-4. `docker compose up --build`
-5. The app should be available on https://localhost .
-
-The database will be populated with four test users on startup. 
+1. Generate a cert (dotnet dev-certs https).
+2. Copy the cert into `~\.aspnet\https`. 
+3. `docker compose up --build` or run from Visual Studio
+5. The app should be available on https://localhost:8080 . 
