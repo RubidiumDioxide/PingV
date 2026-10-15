@@ -1,4 +1,4 @@
-﻿namespace Schedule.API.Controllers;
+﻿namespace Schedule.API;
 
 
 [ApiController]

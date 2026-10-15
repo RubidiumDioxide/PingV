@@ -1,10 +1,8 @@
-using Schedule.Infrastructure.Auth;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-//builder.Services.AddEndpointsApiExplorer(); 
 builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks();  
 
 var dbProvider = builder.Configuration.GetValue<string>("DbProvider"); 
 var connectionString = builder.Configuration.GetConnectionString(dbProvider ?? "PostgreSQL");
@@ -56,8 +54,8 @@ app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "PingV API v1");
-}); 
-app.UseAuthorization();
+});
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run(); 

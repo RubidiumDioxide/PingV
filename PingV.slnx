@@ -1,6 +1,11 @@
 <Solution>
-  <Folder Name="/Solution Items/">
-    <File Path="docker-compose.yml" />
+  <Folder Name="/APIGateways/">
+    <Project Path="APIGateways/WepAPIGateway/WebAPIGateway.csproj" />
   </Folder>
-  <Project Path="Services/Schedule/Schedule.csproj" />
+  <Folder Name="/Services/">
+    <Project Path="Services/Schedule/Schedule.csproj" />
+  </Folder>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
 </Solution>

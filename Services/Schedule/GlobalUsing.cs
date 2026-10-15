@@ -3,7 +3,7 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Caching.Distributed;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using System.Linq.Expressions;
-global using System.Text.Json; 
+global using System.Text.Json;
 
 
 global using Schedule.Domain.Entities;
@@ -21,5 +21,6 @@ global using Schedule.Infrastructure.Repositories;
 global using Schedule.Infrastructure.EntityTypeConfiguration;
 global using Schedule.Infrastructure.Exceptions; 
 global using Schedule.Infrastructure.Services;
+global using Schedule.Infrastructure.Auth; 
 global using static Schedule.Application.CacheKeyProvider;
 global using static Schedule.Infrastructure.Mapper;
