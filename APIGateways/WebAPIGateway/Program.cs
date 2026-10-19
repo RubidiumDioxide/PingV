@@ -3,8 +3,17 @@ var builder = WebApplication.CreateBuilder(args);
 var routes = new[] {
     new RouteConfig()
     {
-        RouteId = "all", 
-        ClusterId = "schedule",
+        RouteId = "schedule_route", 
+        ClusterId = "schedule_cluster",
+        Match = new RouteMatch
+        {
+            Path = "{**catch-all}"
+        }
+    }, 
+    new RouteConfig()
+    {
+        RouteId = "wishlist_route",
+        ClusterId = "wishlist_cluster",
         Match = new RouteMatch
         {
             Path = "{**catch-all}"
@@ -15,7 +24,7 @@ var routes = new[] {
 var clusters = new[] {
     new ClusterConfig()
     {
-        ClusterId = "schedule",
+        ClusterId = "schedule_cluster",
         HealthCheck = new HealthCheckConfig
         {
             Active = new ActiveHealthCheckConfig
@@ -31,7 +40,28 @@ var clusters = new[] {
         Metadata = new Dictionary<string, string> { { ConsecutiveFailuresHealthPolicyOptions.ThresholdMetadataName, "5" } }, 
         Destinations = new Dictionary<string, DestinationConfig>(StringComparer.OrdinalIgnoreCase)
         {
-            { "destination1", new DestinationConfig() { Address = "http://schedule:8080" } } 
+            { "schedule_destination1", new DestinationConfig() { Address = "http://schedule:8080" } } 
+        }
+    }, 
+    new ClusterConfig()
+    {
+        ClusterId = "wishlist_cluster",
+        HealthCheck = new HealthCheckConfig
+        {
+            Active = new ActiveHealthCheckConfig
+            {
+                Enabled = true,
+                Interval = TimeSpan.FromMinutes(1),
+                Timeout = TimeSpan.FromSeconds(10),
+                Policy = HealthCheckConstants.ActivePolicy.ConsecutiveFailures,
+                Path = "/actuator/health",
+                Query = "?foo=bar",
+            }
+        },
+        Metadata = new Dictionary<string, string> { { ConsecutiveFailuresHealthPolicyOptions.ThresholdMetadataName, "5" } },
+        Destinations = new Dictionary<string, DestinationConfig>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "wishlist_destination1", new DestinationConfig() { Address = "http://wishlist:8080" } }
         }
     }
 };
