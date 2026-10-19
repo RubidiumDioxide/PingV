@@ -4,6 +4,7 @@ global using Microsoft.Extensions.Caching.Distributed;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using System.Linq.Expressions;
 global using System.Text.Json;
+global using System.Text.Json.Serialization; 
 
 
 global using Schedule.Domain.Entities;

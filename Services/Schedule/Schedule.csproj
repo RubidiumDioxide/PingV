@@ -23,6 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application\IntegrationEvents\Events\" />
+    <Folder Include="Application\IntegrationEvents\EventHandling\" />
     <Folder Include="Infrastructure\Database\Migrations\" />
   </ItemGroup>
 
