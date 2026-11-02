@@ -1,5 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var routes = new[] {
     new RouteConfig()
     {
@@ -7,8 +10,15 @@ var routes = new[] {
         ClusterId = "schedule_cluster",
         Match = new RouteMatch
         {
-            Path = "{**catch-all}"
-        }
+            Path = "schedule/{**catch-all}"
+        }, 
+        Transforms =
+        [
+            new Dictionary<string, string>
+            {
+                { "PathRemovePrefix", "/schedule" }
+            }
+        ]
     }, 
     new RouteConfig()
     {
@@ -16,8 +26,15 @@ var routes = new[] {
         ClusterId = "wishlist_cluster",
         Match = new RouteMatch
         {
-            Path = "{**catch-all}"
-        }
+            Path = "wishlist/{**catch-all}"
+        }, 
+        Transforms =
+        [
+            new Dictionary<string, string>
+            {
+                { "PathRemovePrefix", "/wishlist" }
+            }
+        ]
     }
 }; 
 
@@ -70,6 +87,12 @@ builder.Services.AddReverseProxy().LoadFromMemory(routes, clusters);
 
 var app = builder.Build();
 
-app.MapReverseProxy(); 
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/schedule/swagger/v1/swagger.json", "Schedule Service");
+    options.SwaggerEndpoint("/wishlist/v3/api-docs", "Wishlist Service");
+});
+app.MapReverseProxy();
 
-app.Run();
+app.Run(); 

@@ -2,7 +2,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS base
 USER $APP_UID 
 WORKDIR /app
-EXPOSE 8080
 
 
 # This stage is used to build the service project

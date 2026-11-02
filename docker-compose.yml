@@ -65,6 +65,7 @@ services:
       context: .
       dockerfile: Services/Wishlist/Dockerfile 
     environment:
+      - SERVER_PORT=8080
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:${POSTGRES_PORT}/${POSTGRES_DB}
       - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
       - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD} 

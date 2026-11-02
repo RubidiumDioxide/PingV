@@ -4,7 +4,8 @@ public class ScheduleSlot
 {
     public Guid Id { get; private set; }
     public Guid CreatorId { get; private set; }
-    public TimeRange TimeRange { get; private set; } = default!;
+    public DateTimeOffset Start { get; private set; } = default!;
+    public DateTimeOffset End { get; private set; } = default!;
     public string? Note { get; private set; }
 
     private ScheduleSlot() { }
@@ -12,13 +13,15 @@ public class ScheduleSlot
     public ScheduleSlot(
         Guid id,
         Guid creatorId,
-        TimeRange timeRange,
+        DateTimeOffset start,
+        DateTimeOffset end, 
         string? note = null
     )
     {
         Id = id;
         CreatorId = creatorId;
-        TimeRange = timeRange;
+        Start = start; 
+        End = end; 
         Note = note;
     }
 }

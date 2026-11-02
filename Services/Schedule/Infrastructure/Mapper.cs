@@ -6,15 +6,17 @@ public static class Mapper
     {
         Id = slot.Id,
         CreatorId = slot.CreatorId,
-        Start = slot.TimeRange.Start,
-        End = slot.TimeRange.End,
+        Start = slot.Start,
+        End = slot.End,
         Note = slot.Note
     };
 
-    public static ScheduleSlot? DbToDomain(this ScheduleSlotDbModel? slot)
-        => (slot == null)? null : new(slot.Id, slot.CreatorId, new TimeRange(slot.Start, slot.End), slot.Note);
+    public static ScheduleSlot DbToDomain(this ScheduleSlotDbModel slot)
+        => new(slot.Id, slot.CreatorId, slot.Start, slot.End, slot.Note);
+    
+    public static ScheduleSlotDto DbToDto(this ScheduleSlotDbModel slot)
+       => new(slot.Id, slot.CreatorId, slot.Creator.Login, slot.Start, slot.End, slot.Note);
 
-
-    public static Expression<Func<ScheduleSlotDbModel, ScheduleSlotDto>> ScheduleSlotDbToDto
+    public static Expression<Func<ScheduleSlotDbModel, ScheduleSlotDto>> DbToDtoExpression
        => slot => new(slot.Id, slot.CreatorId, slot.Creator.Login, slot.Start, slot.End, slot.Note);
 }

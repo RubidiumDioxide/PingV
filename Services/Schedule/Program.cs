@@ -31,30 +31,26 @@ builder.Services.AddScoped<IScheduleQueryService, ScheduleQueryService>(sp =>
 {
     var context = sp.GetRequiredService<ScheduleDbContext>();
     var cache = sp.GetRequiredService<IDistributedCache>();
-    var logger = sp.GetRequiredService<ILogger<ScheduleQueryService>>();
     var dbPrefix = $"{dbProvider}:Schedule";
 
-    return new ScheduleQueryService(context, cache, dbPrefix, logger, userMock);
+    return new ScheduleQueryService(context, cache, dbPrefix, userMock);
 });
 builder.Services.AddScoped<IScheduleCommandService, ScheduleCommandService>(sp =>
 {
     var scheduleRepository = sp.GetRequiredService<DbScheduleRepository>();
     var cache = sp.GetRequiredService<IDistributedCache>();
-    var logger = sp.GetRequiredService<ILogger<ScheduleCommandService>>();
     var dbPrefix = $"{dbProvider}:Schedule"; 
 
-    return new ScheduleCommandService(scheduleRepository, cache, dbPrefix, logger, userMock);
+    return new ScheduleCommandService(scheduleRepository, cache, dbPrefix, userMock);
 });
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-app.UseHttpsRedirection();
-app.UseSwagger();
-app.UseSwaggerUI(options =>
-{
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "PingV API v1");
-});
+app.UseSwagger(); 
+app.UseExceptionHandler();
 app.MapControllers();
 app.MapHealthChecks("/health");
 

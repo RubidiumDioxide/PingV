@@ -12,6 +12,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+        auto_quote_keyword: true
     show-sql: true
 
   rabbitmq:
@@ -19,3 +20,7 @@ spring:
     port: ${SPRING_RABBITMQ_PORT}
     username: ${SPRING_RABBITMQ_USERNAME}
     password: ${SPRING_RABBITMQ_PASSWORD}
+
+springdoc:
+  api-docs:
+    version: openapi_3_0
