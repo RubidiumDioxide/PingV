@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks();
 
 var routes = new[] {
     new RouteConfig()
@@ -94,5 +95,6 @@ app.UseSwaggerUI(options =>
     options.SwaggerEndpoint("/wishlist/v3/api-docs", "Wishlist Service");
 });
 app.MapReverseProxy();
+app.MapHealthChecks("/health");
 
 app.Run(); 

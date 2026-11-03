@@ -18,6 +18,9 @@ public class ScheduleSlot
         string? note = null
     )
     {
+        if (start > end)
+            throw new DomainLevelException("Start date/time cannot be later than end date/time.");
+        
         Id = id;
         CreatorId = creatorId;
         Start = start; 

@@ -2,6 +2,12 @@
   <Folder Name="/APIGateways/">
     <Project Path="APIGateways/WebAPIGateway/WebAPIGateway.csproj" />
   </Folder>
+  <Folder Name="/Clients/">
+    <Project Path="Clients/AngularSPA/AngularSPA.esproj">
+      <Build />
+      <Deploy />
+    </Project>
+  </Folder>
   <Folder Name="/Services/">
     <Project Path="Services/Schedule/Schedule.csproj" />
   </Folder>
